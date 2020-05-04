@@ -1,0 +1,191 @@
+﻿<Window x:Class="JsonMapper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:JsonMapper"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="582" Width="942">
+    <Grid Name="BaseGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="248*"/>
+            <RowDefinition Height="137*"/>
+            <RowDefinition Height="7*"/>
+            <RowDefinition Height="159*"/>
+        </Grid.RowDefinitions>
+        <Grid Name="MapperGrid" Visibility="Visible" Grid.RowSpan="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="369"/>
+                <ColumnDefinition Width="169"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0">Press this to do a simple single value to path map.</Label>
+            <Button Grid.Column="1" Grid.Row="0" Click="PropertyMap_Click" Name="PropertyMapStartBtn" IsEnabled="False">PropertyMap</Button>
+            <Label Grid.Row="1" Content="Press this to map property based on sibling value in the template&#xD;&#xA;."/>
+            <Button Grid.Row="1" Grid.Column="1" Name="SiblingMapStartBtn" IsEnabled="False" Click="SiblingPropertyMap_Click">SiblingPropertyMap</Button>
+            <Label Grid.Row="2" Grid.Column="0">Press this to do insert value to existing string.</Label>
+            <Button Grid.Row="2" Grid.Column="1" Name="PropertyInserterStartBtn" Click="PropertyInserterStartBtn_Click" IsEnabled="False">PropertyInserter</Button>
+            <Label Grid.Row="3" Grid.Column="0">Press this to do sibling mapping based on column.</Label>
+            <Button Grid.Row="3" Grid.Column="1" Name="SiblingColumnValueStartBtn" Click="SiblingColumnBtn_Click" IsEnabled="False">SiblingColumnMap</Button>
+            <Label Grid.Row="4" Grid.Column="0">Press this to exclude rows based on column value.</Label>
+            <Button Grid.Row="4" Grid.Column="1" Name="PropertyExcluderStartBtn" Click="PropertyExcluderStartBtn_Click" IsEnabled="False">PropertyValueExcluder</Button>
+            <Button Name="RuleBtn" Grid.Row="7" Grid.Column="0" Click="RuleBtn_Click" Margin="5,1,197,30" Grid.RowSpan="2">Toggle rule-view</Button>
+            <Button Name="MapBtn" Grid.Row="7" Grid.Column="1" IsEnabled="False" Click="MapBtn_Click">Create JSON!</Button>
+        </Grid>
+        <Grid Name="PropertyMapGrid" Visibility="Hidden" Grid.RowSpan="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="350"/>
+                <ColumnDefinition Width="150"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0" Grid.Row="0">Select the CSV-column name:</Label>
+            <ComboBox Name="PropertyMapCSV_Cb" Grid.Row="0" Grid.Column="1"></ComboBox>
+            <Label Grid.Column="0" Grid.Row="1">Select the target property:</Label>
+            <ComboBox Name="PropertyMapProp_Cb" Grid.Row="1" Grid.Column="1"></ComboBox>
+            <Button Grid.Row="7" Width="150" Grid.Column="0" Click="PropertyMapReturn_Click">Return to previous view</Button>
+            <Button Grid.Row="7" Grid.Column="1" Click="PropertyMapTrigger_Click">Add to the rules</Button>
+        </Grid>
+        <Grid Name="PropertyValueExcluderGrid" Visibility="Hidden" Grid.RowSpan="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="350"/>
+                <ColumnDefinition Width="150"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0" Grid.Row="0">Select the CSV-column name:</Label>
+            <ComboBox Name="PropertyValueExcluder_Cb" Grid.Row="0" Grid.Column="1"></ComboBox>
+            <Label Grid.Column="0" Grid.Row="1">Type the required value:</Label>
+            <TextBox Name="PropertyToExclude_tb" Grid.Row="1" Grid.Column="1"></TextBox>
+            <Button Grid.Row="7" Width="150" Grid.Column="0" Click="PropertyValueExcluderReturnBtn_Click">Return to previous view</Button>
+            <Button Grid.Row="7" Grid.Column="1" Click="PropertyValueExcluderTrigger_Click">Add to the rules</Button>
+        </Grid>
+        <Grid Name="PropertyValueInserterGrid" Visibility="Hidden" Grid.RowSpan="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="350"/>
+                <ColumnDefinition Width="150"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0" Grid.Row="0">Select the CSV-column name:</Label>
+            <ComboBox Name="PropertyValueInserterCSV_Cb" Grid.Row="0" Grid.Column="1"></ComboBox>
+            <Label Grid.Column="0" Grid.Row="1">Select the target property:</Label>
+            <ComboBox Name="PropertyValueInserterProp_Cb" Grid.Row="1" Grid.Column="1"></ComboBox>
+            <Label Grid.Column="0" Grid.Row="2">Type the base text including the replace key:</Label>
+            <TextBox Name="PropertyValueInserterBase_tb" Grid.Row="2" Grid.Column="1"></TextBox>
+            <Label Grid.Column="0" Grid.Row="3">Insert the part of text to replace:</Label>
+            <TextBox Name="PropertyValueInserterReplaceKey_tb" Grid.Row="3" Grid.Column="1"></TextBox>
+
+            <Button Grid.Row="7" Width="150" Grid.Column="0" Click="PropertyValueInserterReturn_Click">Return to previous view</Button>
+            <Button Grid.Row="7" Grid.Column="1" Click="PropertyValueInserterTrigger_Click">Add to the rules</Button>
+        </Grid>
+        <Grid Name="SiblingMapGrid" Visibility="Hidden" Grid.RowSpan="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="350"/>
+                <ColumnDefinition Width="150"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0" Grid.Row="0">Select the CSV-column name:</Label>
+            <ComboBox Name="SiblingMapCSV_Cb" Grid.Row="0" Grid.Column="1"></ComboBox>
+            <Label Grid.Column="0" Grid.Row="1">Select the target property:</Label>
+            <ComboBox Name="SiblingMapProp_Cb" Grid.Row="1" Grid.Column="1"></ComboBox>
+            <Label Grid.Column="0" Grid.Row="2">Select the sibling property name:</Label>
+            <ComboBox Name="SiblingName_Cb" Grid.Row="2" Grid.Column="1"></ComboBox>
+            <Label Grid.Column="0" Grid.Row="3">Input sibling value (if it has to be something specific)</Label>
+            <TextBox Name="SiblingMapReplaceValue" Grid.Row="3" Grid.Column="1"></TextBox>
+            <Button Grid.Row="7" Width="150" Grid.Column="0" Click="SiblingMapReturn_Click">Return to previous view</Button>
+            <Button Grid.Row="7" Grid.Column="1" Click="SiblingMapTrigger_Click">Add to the rules</Button>
+        </Grid>
+        <Grid Name="SiblingColumnMapGrid" Visibility="Hidden" Grid.RowSpan="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="350"/>
+                <ColumnDefinition Width="150"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0" Grid.Row="0">Select the CSV-column name:</Label>
+            <ComboBox Name="SiblingColumnMapCSV_Cb" Grid.Row="0" Grid.Column="1"></ComboBox>
+            <Label Grid.Column="0" Grid.Row="1">Select the target property:</Label>
+            <ComboBox Name="SiblingColumnMapProp_Cb" Grid.Row="1" Grid.Column="1"></ComboBox>
+            <Label Grid.Column="0" Grid.Row="2">Select the sibling column property name:</Label>
+            <ComboBox Name="SiblingColumnNameCSV_Cb" Grid.Row="2" Grid.Column="1"></ComboBox>
+            <Label Grid.Column="0" Grid.Row="3">Input sibling column value (if it has to be something specific)</Label>
+            <TextBox Name="SiblingColumnMapReplaceValue" Grid.Row="3" Grid.Column="1"></TextBox>
+            <Button Grid.Row="7" Width="150" Grid.Column="0" Click="SiblingColumnMapReturn_Click">Return to previous view</Button>
+            <Button Grid.Row="7" Grid.Column="1" Click="SiblingColumnMapTrigger_Click">Add to the rules</Button>
+        </Grid>
+
+        <RichTextBox Height="150" Name="TemplateBox" RenderTransformOrigin="0.202,0.446" Margin="20,54,0,0" Grid.RowSpan="3" HorizontalAlignment="Left" Width="384" VerticalAlignment="Top" Grid.Row="1"/>
+        <Grid x:Name="RuleListGrid" Visibility="Hidden" Grid.RowSpan="2">
+            <ListBox Name="lbInstructions" Margin="557,1,20,85" >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button x:Name="deleteRuleBtn" IsEnabled="False" Click="DeleteRule_Click" Margin="762,0,0,33" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="152">Delete selected rule</Button>
+            <Button x:Name="LoadRuleBtn" IsEnabled="False" Click="LoadRule_Click" Margin="561,0,0,32" HorizontalAlignment="Left" Width="152" Height="25" VerticalAlignment="Bottom">Load rules from a file</Button>
+            <Button x:Name="SaveRuleBtn" IsEnabled="False" Click="SaveRule_Click" Margin="556,0,0,-28" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="152" Height="24">Save rules</Button>
+        </Grid>
+        <Button Height="20" Click="TemplateButton_Click" Content="Generate Template" Width="120" Name="TemplateButton" Margin="19,104,0,0" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Button Height="20" Click="ChangeBetweenJsonXml_Click" Content="Change format" Width="120" Name="JsonXmlButton" Margin="19,80,0,0" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <ComboBox Name="SeparatorComboBox" Height="20" RenderTransformOrigin="-1.4,2.15" Margin="349,74,0,0" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Left" Width="49"/>
+        <Button Height="20" Click="LoadCsv_Click" Content="Load .CSV-file" Width="120" Name="LoadCsvButton" Margin="276,102,0,0" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <RichTextBox Visibility="Visible" Name="ResultBox" Margin="557,1,44,54" Grid.RowSpan="4" />
+        <Button Height="20" Click="ResultXmlJsonBtn_Click" Content="Change Format" Width="120" Name="ResultXmlJsonBtn" Margin="577,102,0,0" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" />
+    </Grid>
+</Window>
