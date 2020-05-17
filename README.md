@@ -55,14 +55,14 @@ This means no linux for you guys yet.
 
 Parametrized template file:
 
-<p>
-    <h1>Autogeneration</h1>
-    <h2>Example</h2>
-    <img src="" height="0" width="0" />
-    <h3>This is replaced</h3>
-    <p>
-    </p>
-</p>
+{
+  "p": {
+    "h1": "Autogeneration",
+    "h2": "Example",
+    "h3": "This is replaced",
+    "p": ""
+  }
+}
 
 For values, I simply had an old .csv-file with values of children born that yer, their gender, height, weight and if they were first born.
 
@@ -76,37 +76,26 @@ PropertyValueExcluder(source="Firstborn", valueRequirement="1")
 So basically this creates a list of XML objects, which contain gender, height and weight and exclude non-firstborn children from the results.
 
 Results are: 
-<p>
-<h1>girl</h1>
-<h2>48</h2>
-<img src="" height="0" width="0" />
-<h3>Weight is 3150 grams.</h3>
-<p>
-</p>
-</p>
-<p>
-<h1>girl</h1>
-<h2>57</h2>
-<img src="" height="0" width="0" />
-<h3>Weight is 4460 grams.</h3>
-<p>
-</p>
-</p>
-<p>
-<h1>boy</h1>
-<h2>46</h2>
-<img src="" height="0" width="0" />
-<h3>Weight is 2820 grams.</h3>
-<p>
-</p>
-</p>
-<p>
-<h1>girl</h1>
-<h2>54</h2>
-<img src="" height="0" width="0" />
-<h3>Weight is 4200 grams.</h3>
-<p>
-</p>
-</p>
-
+{
+  "p": {
+    "h1": "girl",
+    "h2": "48",
+    "h3": "Weight is 3150 grams.",
+    "p": ""
+  }
+},{
+  "p": {
+    "h1": "girl",
+    "h2": "57",
+    "h3": "Weight is 4460 grams.",
+    "p": ""
+  }
+},{
+  "p": {
+    "h1": "boy",
+    "h2": "46",
+    "h3": "Weight is 2820 grams.",
+    "p": ""
+  }
+},{
 ... etc.
