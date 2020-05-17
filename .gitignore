@@ -1,0 +1,5 @@
+/JsonMapper/bin/*
+/JsonMapper/obj/*
+/JsonMapperTests/bin/*
+/JsonMapperTests/obj/*
+/.vs/*
